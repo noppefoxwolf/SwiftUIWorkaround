@@ -24,7 +24,7 @@ struct PreferredColorSchemeModifier: ViewModifier {
     }
 }
 
-extension Optional<ColorScheme> {
+extension Optional where Wrapped == ColorScheme {
     var userInterfaceStyle: UIUserInterfaceStyle {
         switch self {
         case .dark:
