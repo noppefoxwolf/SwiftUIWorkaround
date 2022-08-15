@@ -21,4 +21,10 @@ struct ColorSchemeView: View {
 }
 ```
 
-# Autho
+# Author
+
+[noppe](https://twitter.com/noppefoxwolf)
+
+# LICENSE
+
+MIT
