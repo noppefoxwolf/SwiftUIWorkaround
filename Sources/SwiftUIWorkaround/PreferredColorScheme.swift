@@ -8,18 +8,26 @@ extension Workaround {
 }
 
 struct PreferredColorSchemeModifier: ViewModifier {
+    @Environment(\.scenePhase) var scenePhase
     @Binding var colorScheme: ColorScheme?
     
     func body(content: Content) -> some View {
         content
             .onChange(of: colorScheme) { newValue in
-                UIApplication
-                    .shared
-                    .connectedScenes
-                    .compactMap({ $0 as? UIWindowScene })
-                    .forEach { scene in
-                        scene.keyWindow?.overrideUserInterfaceStyle = newValue.userInterfaceStyle
-                    }
+                setUserInterfaceStyle(newValue.userInterfaceStyle)
+            }
+            .onChange(of: scenePhase) { _ in
+                setUserInterfaceStyle(colorScheme.userInterfaceStyle)
+            }
+    }
+    
+    func setUserInterfaceStyle(_ interfaceStyle: UIUserInterfaceStyle) {
+        UIApplication
+            .shared
+            .connectedScenes
+            .compactMap({ $0 as? UIWindowScene })
+            .forEach { scene in
+                scene.keyWindow?.overrideUserInterfaceStyle = interfaceStyle
             }
     }
 }
